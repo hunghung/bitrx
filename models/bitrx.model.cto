@@ -11,8 +11,8 @@ concept Address{
 
 /****************** PARTICIPANTS *************** */
 
-participant Patient identified by patientID {
-  o String patientID
+participant Consumer identified by consumerID {
+  o String consumerID
   o String firstName
   o String lastName
   o DateTime dob
@@ -73,11 +73,16 @@ concept Prescription {
 asset RxBlock identified by rxBlockID {
   o String rxBlockID
   o Prescription[] prescriptions optional
-  --> Patient patient   
+  --> Consumer consumer   
 }
 
-/***** TRANSACTIONS *****/
-transaction prescribeMedicine {
-  --> RxBlock rxBlock
+transaction addRxBlock  {
+  o RxBlock rxBlock
+}
+
+transaction prescribeMedicine  {
+   --> RxBlock rxBlock
   o Prescription[] prescriptions
 }
+
+

@@ -12,25 +12,17 @@
 rule AllowProviderAccess{
 	description: "Provider Access - grant Provider access to Prescription"
 	participant: "blockmaniac.bitrx.Provider"
-	operation: READ, UPDATE
-	resource: "blockmaniac.bitrx.PatientPrescription"
-	action: ALLOW
-}
-
-rule AllowProviderPrescribeAccess{
-	description: "Provider Access - grant Provider access to Prescription"
-	participant: "blockmaniac.bitrx.Provider"
-	operation: CREATE
-    resource: "blockmaniac.bitrx.PatientPrescription"
-  	transaction: "blockmaniac.bitrx.prescribeMedicine"
+	operation: READ, UPDATE, CREATE
+	resource: "blockmaniac.bitrx.RxBlock"
 	action: ALLOW
 }
 
 rule AllowPatientAccess{
 	description: "Provider Access - grant Provider access to Prescription"
-	participant: "blockmaniac.bitrx.Patient"
+	participant(p): "blockmaniac.bitrx.Consumer"
 	operation: READ
-	resource: "blockmaniac.bitrx.PatientPrescription"
+	resource(r): "blockmaniac.bitrx.RxBlock"
+  	condition: ( p.getIdentifier() === r.consumer.getIdentifier() )
 	action: ALLOW
 }
 
@@ -39,7 +31,7 @@ rule AllowPharmacyAccess{
 	description: "Provider Access - grant Pharmacy access to Prescription"
 	participant: "blockmaniac.bitrx.Pharmacy"
 	operation: READ, UPDATE
-	resource: "blockmaniac.bitrx.PatientPrescription"
+	resource: "blockmaniac.bitrx.RxBlock"
 	action: ALLOW
 }
 
@@ -47,6 +39,6 @@ rule AllowMCOAccess{
 	description: "Provider Access - grant Payer access to Prescription"
 	participant: "blockmaniac.bitrx.Payer"
 	operation: READ
-	resource: "blockmaniac.bitrx.PatientPrescription"
+	resource: "blockmaniac.bitrx.RxBlock"
 	action: ALLOW
 }
