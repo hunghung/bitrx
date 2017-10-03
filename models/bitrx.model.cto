@@ -1,0 +1,83 @@
+namespace blockmaniac.bitrx
+/*** concept = Structure ***/
+concept Address{
+  o String address1
+  o String address2
+  o String city
+  o String state
+  o String zipCode
+  o String country
+}
+
+/****************** PARTICIPANTS *************** */
+
+participant Patient identified by patientID {
+  o String patientID
+  o String firstName
+  o String lastName
+  o DateTime dob
+  o Address address
+  o String phone
+  o String email
+  o String hicn
+}
+
+participant Provider identified by provID {
+  o String provID
+  o String name
+  o String tin
+  o Address address
+  o String phone
+  o String email
+  o String specialty
+}
+
+participant Pharmacy identified by pharmacyID {
+  o String pharmacyID
+  o String name
+  o String tin
+  o Address address
+  o String phone
+  o String email
+}
+
+participant Payer identified by payerID{
+  o String payerID
+  o String Name
+  o String tin
+}
+
+
+/************************** ASSETS ********************/
+concept Insurance {
+  o String policyNumber
+  o Payer insurer
+}
+
+concept Prescription {
+  o String medName
+  o String dosage
+  o Integer quantity
+  o Integer refills
+  
+  o DateTime prescriptiondate
+  o DateTime scriptDropDate
+  o DateTime fulfillingDate
+  o DateTime pickupDate
+  
+  --> Pharmacy pharmacy
+  --> Provider provider
+  o Insurance payer
+}
+
+asset RxBlock identified by rxBlockID {
+  o String rxBlockID
+  o Prescription[] prescriptions optional
+  --> Patient patient   
+}
+
+/***** TRANSACTIONS *****/
+transaction prescribeMedicine {
+  --> RxBlock rxBlock
+  o Prescription prescription
+}

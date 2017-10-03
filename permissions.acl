@@ -1,0 +1,52 @@
+/**
+ * New access control file
+ */
+ rule AllAccess {
+     description: "AllAccess - grant everything to everybody."
+     participant: "org.hyperledger.composer.system.Participant"
+     operation: ALL
+     resource: "org.hyperledger.composer.system.**"
+     action: ALLOW
+ }
+
+rule AllowProviderAccess{
+	description: "Provider Access - grant Provider access to Prescription"
+	participant: "blockmaniac.bitrx.Provider"
+	operation: READ, UPDATE
+	resource: "blockmaniac.bitrx.PatientPrescription"
+	action: ALLOW
+}
+
+rule AllowProviderPrescribeAccess{
+	description: "Provider Access - grant Provider access to Prescription"
+	participant: "blockmaniac.bitrx.Provider"
+	operation: CREATE
+    resource: "blockmaniac.bitrx.PatientPrescription"
+  	transaction: "blockmaniac.bitrx.prescribeMedicine"
+	action: ALLOW
+}
+
+rule AllowPatientAccess{
+	description: "Provider Access - grant Provider access to Prescription"
+	participant: "blockmaniac.bitrx.Patient"
+	operation: READ
+	resource: "blockmaniac.bitrx.PatientPrescription"
+	action: ALLOW
+}
+
+
+rule AllowPharmacyAccess{
+	description: "Provider Access - grant Pharmacy access to Prescription"
+	participant: "blockmaniac.bitrx.Pharmacy"
+	operation: READ, UPDATE
+	resource: "blockmaniac.bitrx.PatientPrescription"
+	action: ALLOW
+}
+
+rule AllowMCOAccess{
+	description: "Provider Access - grant Payer access to Prescription"
+	participant: "blockmaniac.bitrx.Payer"
+	operation: READ
+	resource: "blockmaniac.bitrx.PatientPrescription"
+	action: ALLOW
+}
