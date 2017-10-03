@@ -51,7 +51,7 @@ participant Payer identified by payerID{
 /************************** ASSETS ********************/
 concept Insurance {
   o String policyNumber
-  o Payer insurer
+  --> Payer insurer
 }
 
 concept Prescription {
@@ -79,5 +79,5 @@ asset RxBlock identified by rxBlockID {
 /***** TRANSACTIONS *****/
 transaction prescribeMedicine {
   --> RxBlock rxBlock
-  o Prescription prescription
+  o Prescription[] prescriptions
 }
