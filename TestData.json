@@ -1,0 +1,24 @@
+  {
+    "$class": "blockmaniac.bitrx.prescribeMedicine",
+    "rxBlock": "resource:blockmaniac.bitrx.RxBlock#1",
+    "prescriptions": [
+      {
+        "$class": "blockmaniac.bitrx.Prescription",
+        "medName": "Ibulphophen",
+        "dosage": "1 tablet a times, 3 times a day",
+        "quantity": 9,
+        "refills": 0,
+        "prescriptiondate": "2017-10-03T20:46:04.409Z",
+        "scriptDropDate": "2017-10-03T20:46:04.409Z",
+        "fulfillingDate": "2017-10-03T20:46:04.409Z",
+        "pickupDate": "2017-10-03T20:46:04.409Z",
+        "pharmacy": "resource:blockmaniac.bitrx.Pharmacy#1",
+        "provider": "resource:blockmaniac.bitrx.Provider#1",
+        "payer": {
+          "$class": "blockmaniac.bitrx.Insurance",
+          "policyNumber": "Pariatur aliquip irure minim in.",
+          "insurer": "resource:blockmaniac.bitrx.Payer#1"
+        }
+      }
+    ]
+  }

@@ -9,6 +9,15 @@ concept Address{
   o String country
 }
 
+enum PrescriptionState{
+  o NEW
+  o PRESCRIBED
+  o ON_MARKET
+  o PHARMACY_CHOSEN
+  o FULFILLED
+  o COMPLETED
+}
+
 /****************** PARTICIPANTS *************** */
 
 participant Consumer identified by consumerID {
@@ -24,7 +33,9 @@ participant Consumer identified by consumerID {
 
 participant Provider identified by provID {
   o String provID
-  o String name
+  o String fullName
+  o String firstName optional
+  o String lastName optional
   o String tin
   o Address address
   o String phone
@@ -54,20 +65,27 @@ concept Insurance {
   --> Payer insurer
 }
 
-concept Prescription {
+concept Prescription{
+  o String scriptID 
+  o String NDCCode
   o String medName
-  o String dosage
+  o String description optional
+  o String Manufacturer optional
   o Integer quantity
+  o String dosage
   o Integer refills
+  o String rules optional
   
   o DateTime prescriptiondate
   o DateTime scriptDropDate
   o DateTime fulfillingDate
   o DateTime pickupDate
   
-  --> Pharmacy pharmacy
+  --> Pharmacy pharmacy 
   --> Provider provider
-  o Insurance payer
+  o Insurance insurance optional
+  
+  o PrescriptionState state default="NEW"
 }
 
 asset RxBlock identified by rxBlockID {
@@ -80,9 +98,27 @@ transaction addRxBlock  {
   o RxBlock rxBlock
 }
 
-transaction prescribeMedicine  {
+transaction addPrescription  {
    --> RxBlock rxBlock
   o Prescription[] prescriptions
 }
 
 
+transaction fulfillPrescription  {
+   --> RxBlock rxBlock
+  o String scriptID
+  --> Pharmacy pharmacy
+  o DateTime fulfillingDate
+}
+
+transaction dropPrescription  {
+   --> RxBlock rxBlock
+  o String rules
+  o String scriptID
+}
+
+transaction addPharmacy  {
+   --> RxBlock rxBlock
+  o String scriptID
+   --> Pharmacy pharmacy
+}

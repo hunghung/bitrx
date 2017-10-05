@@ -12,15 +12,15 @@
 rule AllowProviderAccess{
 	description: "Provider Access - grant Provider access to Prescription"
 	participant: "blockmaniac.bitrx.Provider"
-	operation: READ, UPDATE, CREATE
+	operation: READ, UPDATE
 	resource: "blockmaniac.bitrx.RxBlock"
 	action: ALLOW
 }
 
-rule AllowPatientAccess{
+rule Allow_Consumer_ReadAsset_Access{
 	description: "Provider Access - grant Provider access to Prescription"
 	participant(p): "blockmaniac.bitrx.Consumer"
-	operation: READ
+	operation: READ,CREATE
 	resource(r): "blockmaniac.bitrx.RxBlock"
   	condition: ( p.getIdentifier() === r.consumer.getIdentifier() )
 	action: ALLOW
